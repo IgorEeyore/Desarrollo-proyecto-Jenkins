@@ -1,0 +1,4 @@
+# Contiene versiones desactualizadas para que sean detectadas posteriormente
+flask==1.0.2
+werkzeug==0.15.3
+jinja2==2.10
