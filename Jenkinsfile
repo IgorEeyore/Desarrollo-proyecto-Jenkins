@@ -47,22 +47,19 @@ pipeline {
         }
 
         stage('OWASP ZAP Scan') {
-            agent { label 'built-in' }
+            agent {
+                docker {
+                    image 'ghcr.io/zaproxy/zaproxy:stable'
+                    args '--network=host -u root'
+                }
+            }
             steps {
                 echo '=== ETAPA: OWASP ZAP ==='
                 sh '''
-                    docker rm -f app-scan 2>/dev/null || true
-                    docker build -t app-vulnerable .
-                    docker run -d --name app-scan -p 5000:5000 app-vulnerable
-                    sleep 8
-                    docker run --rm --network=host \
-                        -v $(pwd):/zap/wrk/:rw \
-                        ghcr.io/zaproxy/zaproxy:stable \
-                        zap-baseline.py \
+                    zap-baseline.py \
                         -t http://localhost:5000 \
                         -r zap_report.html \
                         -I || true
-                    docker rm -f app-scan 2>/dev/null || true
                 '''
             }
         }
