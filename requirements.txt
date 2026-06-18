@@ -1,6 +1,6 @@
 # Contiene versiones desactualizadas para que sean detectadas posteriormente
 flask==1.0.2
-werkzeug==0.15.3
+werkzeug==3.1.8
 jinja2==2.10
 markupsafe==2.0.1
 itsdangerous==1.1.0
